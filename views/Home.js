@@ -32,11 +32,11 @@ const Home = ({ navigation }) => {
       </View>
       <SafeAreaView style={{ flex: 6, alignItems: "center" }}>
         <Image
-          source={require("../assets/logo.png")}
+          source={require("../assets/logo_home.png")}
           style={styles.logoImage}
         />
       </SafeAreaView>
-      <View style={{ flex: 5 }}>
+      <View style={{ flex: 4 }}>
         <View style={{ alignItems: "center", marginTop: 20 }}>
           <Button
             containerStyle={{ textAlign: "center" }}
@@ -45,22 +45,7 @@ const Home = ({ navigation }) => {
               alignItems: "center",
             }}
             buttonStyle={styles.button}
-            title="Start your Journey"
-            titleStyle={styles.buttonTitle}
-            onPress={() => console.log("clicked")}
-            activeOpacity={0.5}
-          />
-        </View>
-
-        <View style={{ alignItems: "center", marginTop: 20 }}>
-          <Button
-            containerStyle={{ textAlign: "center" }}
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            buttonStyle={styles.button}
-            title="View Time Table"
+            title="View Bookings"
             titleStyle={styles.buttonTitle}
             onPress={() => console.log("clicked")}
             activeOpacity={0.5}
@@ -75,7 +60,7 @@ const Home = ({ navigation }) => {
               alignItems: "center",
             }}
             buttonStyle={styles.buttonRed}
-            title="Cancel a Booking"
+            title="Sign in as Different User"
             titleStyle={styles.buttonTitle}
             onPress={() => console.log("clicked")}
             activeOpacity={0.5}
@@ -115,8 +100,8 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     marginTop: 120,
-    width: 270,
-    height: 190,
+    width: 280,
+    height: 230,
   },
   titleText: {
     textAlign: "center",
