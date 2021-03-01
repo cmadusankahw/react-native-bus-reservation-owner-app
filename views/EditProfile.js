@@ -115,23 +115,23 @@ const EditProfile = ({ navigation }) => {
               <View style={{ flex: 4, marginLeft: 20, marginRight: 12 }}>
                 <TextInput
                   style={styles.infoAnswerLabel}
-                  value={user.firstName}
+                  defaultValue={user.firstName}
                 />
                 <TextInput
                   style={styles.infoAnswerLabel}
-                  value={user.lastName}
+                  defaultValue={user.lastName}
                 />
                 <TextInput style={styles.infoAnswerLabel} value={user.NIC} />
                 <TextInput
                   style={styles.infoAnswerLabel}
                   autoCompleteType="tel"
                   keyboardType="numeric"
-                  value={user.mobileNo}
+                  defaultValue={user.mobileNo}
                 />
                 <TextInput
                   style={styles.infoAnswerLabel}
                   autoCompleteType="email"
-                  value={user.email}
+                  defaultValue={user.email}
                 />
               </View>
             </View>

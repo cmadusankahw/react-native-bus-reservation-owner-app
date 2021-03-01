@@ -77,14 +77,6 @@ const DrawerScreen = ({ route, navigation }) => (
           drawerIcon: ({ focused, size }) => <Icon name="face" />,
         }}
       />
-
-      {/* <Drawer.Screen
-        name="Rate BuzzBus"
-        component={RateJourney}
-        options={{
-          drawerIcon: ({ focused, size }) => <Icon name="star" />,
-        }}
-      /> */}
     </Drawer.Navigator>
   </>
 );

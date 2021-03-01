@@ -4,6 +4,7 @@ import home from "../views/Home";
 import { Icon } from "react-native-elements";
 import ConductorBookingStackNavigator from "./ConductorBookingStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
+import HomeStackNavigator from "./HomeStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,8 +19,6 @@ const ConductorBottomNavigator = () => {
             iconName = "home";
           } else if (route.name === "View Bookings") {
             iconName = "book";
-          } else if (route.name === "Reports") {
-            iconName = "history";
           } else if (route.name === "Profile") {
             iconName = "face";
           }
@@ -33,7 +32,7 @@ const ConductorBottomNavigator = () => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Home" component={home} />
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
       <Tab.Screen
         name="View Bookings"
         component={ConductorBookingStackNavigator}

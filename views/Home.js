@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Button, Icon } from "react-native-elements";
+import FloatingButton from "../comps/FloatingButton";
 
 import FocusAwareStatusBar from "../Navigation/FocusAwareStatusBar";
 
@@ -66,6 +67,12 @@ const Home = ({ navigation }) => {
             activeOpacity={0.5}
           />
         </View>
+      </View>
+      <View style={styles.container}>
+        <FloatingButton
+          style={styles.floatinBtn}
+          onPress={() => navigation.navigate("Chat")}
+        />
       </View>
     </>
   );
@@ -135,5 +142,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     textAlign: "center",
+  },
+  floatinBtn: {
+    position: "absolute",
+    bottom: 20,
+    right: 24,
   },
 });

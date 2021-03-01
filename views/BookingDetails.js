@@ -22,32 +22,32 @@ const BookingDetails = ({ navigation }) => {
       bookingId: "B1",
       routeNo: "R1",
       dateTime: "2021-03-19T22:30:00.000Z",
-      start: "Matara",
-      end: "Colombo",
+      pickup: "Matara",
+      destination: "Colombo",
       noOfPassengers: 24,
     },
     {
       bookingId: "B2",
       routeNo: "R1",
       dateTime: "2021-01-19T22:30:00.000Z",
-      start: "Matara",
-      end: "Anuradhapura",
+      pickup: "Matara",
+      destination: "Anuradhapura",
       noOfPassengers: 24,
     },
     {
       bookingId: "B3",
       routeNo: "R2",
       dateTime: "2021-03-19T22:30:00.000Z",
-      start: "Matara",
-      end: "Galle",
+      pickup: "Matara",
+      destination: "Galle",
       noOfPassengers: 24,
     },
     {
       bookingId: "B4",
       routeNo: "R1",
       dateTime: "2021-04-19T22:30:00.000Z",
-      start: "Matara",
-      end: "Colombo",
+      pickup: "Matara",
+      destination: "Colombo",
       noOfPassengers: 24,
     },
   ];
@@ -58,6 +58,7 @@ const BookingDetails = ({ navigation }) => {
 
   // date queries
   const queryByDate = (date) => {
+    setDate(date);
     newBookings = bookings.filter(
       (booking) => booking.dateTime.slice(0, 10) === date
     );
@@ -123,7 +124,6 @@ const BookingDetails = ({ navigation }) => {
               }}
               onDateChange={(date) => {
                 queryByDate(date);
-                setDate(date);
               }}
             />
           </View>
@@ -160,11 +160,24 @@ const BookingDetails = ({ navigation }) => {
                           textAlign: "right",
                           flex: 1,
                           flexDirection: "row",
+                          marginBottom: 4,
                         }}
                       >
                         <Icon name="schedule" size={20} color="gray" />
                         <Text style={styles.timeInfoText}>
                           {booking.dateTime.slice(11, 16)}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          textAlign: "right",
+                          flex: 1,
+                          flexDirection: "row",
+                        }}
+                      >
+                        <Icon name="person" size={20} color="gray" />
+                        <Text style={styles.timeInfoText}>
+                          Passengers: {booking.noOfPassengers}
                         </Text>
                       </View>
                     </View>
@@ -174,13 +187,13 @@ const BookingDetails = ({ navigation }) => {
                         textAlign: "left",
                         flex: 1,
                         flexDirection: "row",
-                        marginLeft: 35,
+                        marginLeft: 15,
                         marginRight: 20,
                       }}
                     >
                       <Icon name="train" size={20} color="#007acc" />
                       <Text style={styles.dateInfoText}>
-                        {booking.start + " to " + booking.end}
+                        {booking.pickup + " to " + booking.destination}
                       </Text>
                     </View>
                   </View>

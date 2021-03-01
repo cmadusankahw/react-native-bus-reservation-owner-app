@@ -1,9 +1,10 @@
 import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import home from "../views/Home";
 import { Icon } from "react-native-elements";
 import BookingStackNavigator from "./BookingStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
+import ReportsStackNavigator from "./ReportsStackNavigator";
+import HomeStackNavigator from "./HomeStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,8 +34,9 @@ const BottomNavigator = () => {
         inactiveTintColor: "gray",
       }}
     >
-      <Tab.Screen name="Home" component={home} />
+      <Tab.Screen name="Home" component={HomeStackNavigator} />
       <Tab.Screen name="View Bookings" component={BookingStackNavigator} />
+      <Tab.Screen name="Reports" component={ReportsStackNavigator} />
       <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );

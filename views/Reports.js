@@ -13,22 +13,35 @@ import { Button, Icon, Card } from "react-native-elements";
 
 import FocusAwareStatusBar from "../Navigation/FocusAwareStatusBar";
 
-const Reports = ({ navigation }) => {
+const Reports = ({ route, navigation }) => {
   // fetched
-  const busRoutes = [
+  const busses = [
     {
       routeNo: "R1",
-      start: "Matara",
-      end: "Colombo",
+      busNo: "NB 6780",
+    },
+    {
+      routeNo: "R2",
+      busNo: "57 6780",
+    },
+    {
+      routeNo: "R3",
+      busNo: "63 1281",
+    },
+    {
+      routeNo: "R4",
+      busNo: "NC 6780",
+    },
+    {
+      routeNo: "R2",
+      busNo: "19 6780",
     },
   ];
 
   const SCREEN_WIDTH = Dimensions.get("window").width;
 
-  const createBooking = () => {
-    // booking creation logic here
-    // local storage logic here
-    console.log("Booking Created Step 01");
+  const handleNavigation = () => {
+    navigation.navigate("ViewReport");
   };
 
   return (
@@ -47,21 +60,21 @@ const Reports = ({ navigation }) => {
       <View style={{ flex: 3 }}>
         <FocusAwareStatusBar barStyle="light-content" hidden={false} />
         <ScrollView>
-          {busRoutes?.map((route, i) => {
+          {busses?.map((bus, i) => {
             return (
               <Card key={i}>
                 <Card.Title>
                   <View
                     style={{
-                      textAlign: "left",
+                      alignContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
                       flex: 1,
                       flexDirection: "row",
                     }}
                   >
                     <Icon name="train" color="gray" />
-                    <Text style={{ marginLeft: 5 }}>
-                      {route.start + " to " + route.end}
-                    </Text>
+                    <Text>{bus.busNo}</Text>
                   </View>
                 </Card.Title>
 
@@ -78,7 +91,7 @@ const Reports = ({ navigation }) => {
                     >
                       <Icon name="info" size={20} color="#007acc" />
                       <Text style={styles.dateInfoText}>
-                        Route No: {route.routeNo}
+                        Route No: {bus.routeNo}
                       </Text>
                     </View>
                     <View
@@ -95,9 +108,9 @@ const Reports = ({ navigation }) => {
                           alignItems: "center",
                         }}
                         buttonStyle={styles.button}
-                        title="Book Now"
+                        title="View Report"
                         titleStyle={styles.buttonTitle}
-                        onPress={() => navigation.navigate("BookingInfo")}
+                        onPress={() => handleNavigation()}
                         activeOpacity={0.5}
                       />
                     </View>
@@ -144,7 +157,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#71C3E7",
+    backgroundColor: "#007acc",
   },
   buttonTitle: {
     fontSize: 12,
