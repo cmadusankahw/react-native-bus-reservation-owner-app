@@ -5,9 +5,11 @@ import { Icon } from "react-native-elements";
 import ProfileScreen from "../views/Profile";
 import CustomSidebarMenu from "./CustomSidebarMenu";
 import BottomNavigator from "./BottomTabNavigator";
-import Bookings from "../views/Bookings";
 import RateJourney from "../views/RateJourney";
 import Reports from "../views/Reports";
+import ConductorBottomNavigator from "./ConductorBottomNavigator";
+import BookingStackNavigator from "./BookingStackNavigator";
+import ConductorBookingStackNavigator from "./ConductorBookingStackNavigator";
 
 const Drawer = createDrawerNavigator();
 
@@ -21,20 +23,43 @@ const DrawerScreen = ({ route, navigation }) => (
       }}
       drawerContent={(props) => <CustomSidebarMenu {...props} />}
     >
-      <Drawer.Screen
-        name="Home"
-        component={BottomNavigator}
-        options={{
-          drawerIcon: ({ focused, size }) => <Icon name="home" />,
-        }}
-      />
-      <Drawer.Screen
-        name="View Bookings"
-        component={Bookings}
-        options={{
-          drawerIcon: ({ focused, size }) => <Icon name="history" />,
-        }}
-      />
+      {route.params.roleId == "owner" && (
+        <>
+          <Drawer.Screen
+            name="Home"
+            component={BottomNavigator}
+            options={{
+              drawerIcon: ({ focused, size }) => <Icon name="home" />,
+            }}
+          />
+          <Drawer.Screen
+            name="View Bookings"
+            component={BookingStackNavigator}
+            options={{
+              drawerIcon: ({ focused, size }) => <Icon name="history" />,
+            }}
+          />
+        </>
+      )}
+      {route.params.roleId == "conductor" && (
+        <>
+          <Drawer.Screen
+            name="Home"
+            component={ConductorBottomNavigator}
+            options={{
+              drawerIcon: ({ focused, size }) => <Icon name="book" />,
+            }}
+          />
+          <Drawer.Screen
+            name="View Bookings"
+            component={ConductorBookingStackNavigator}
+            options={{
+              drawerIcon: ({ focused, size }) => <Icon name="history" />,
+            }}
+          />
+        </>
+      )}
+
       {route.params.roleId == "owner" && (
         <Drawer.Screen
           name="Reports"

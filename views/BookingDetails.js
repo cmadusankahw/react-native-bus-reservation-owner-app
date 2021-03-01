@@ -15,44 +15,54 @@ import DatePickerModel from "react-native-datepicker";
 
 import FocusAwareStatusBar from "../Navigation/FocusAwareStatusBar";
 
-const TimeTable = ({ navigation }) => {
+const BookingDetails = ({ navigation }) => {
   // fetched
-  const scheduleData = {
-    arrivals: ["Matara", "Colombo", "Galle"],
-    departures: ["Matara", "Colombo", "Galle"],
-  };
-
-  // fetched
-  const busRoutes = [
+  const bookings = [
     {
+      bookingId: "B1",
       routeNo: "R1",
-      dateTime: "2021-02-19T22:30:00.000Z",
-      arrival: "Matara",
-      departure: "Colombo",
+      dateTime: "2021-03-19T22:30:00.000Z",
+      start: "Matara",
+      end: "Colombo",
+      noOfPassengers: 24,
     },
     {
+      bookingId: "B2",
+      routeNo: "R1",
+      dateTime: "2021-01-19T22:30:00.000Z",
+      start: "Matara",
+      end: "Anuradhapura",
+      noOfPassengers: 24,
+    },
+    {
+      bookingId: "B3",
       routeNo: "R2",
-      dateTime: "2021-02-20T11:30:00.000Z",
-      arrival: "Matara",
-      departure: "Galle",
+      dateTime: "2021-03-19T22:30:00.000Z",
+      start: "Matara",
+      end: "Galle",
+      noOfPassengers: 24,
     },
     {
-      routeNo: "R3",
-      dateTime: "2021-02-20T14:30:00.000Z",
-      arrival: "Colombo",
-      departure: "Galle",
-    },
-    {
-      routeNo: "R4",
-      dateTime: "2021-02-21T08:30:00.000Z",
-      arrival: "Colombo",
-      departure: "Galle",
+      bookingId: "B4",
+      routeNo: "R1",
+      dateTime: "2021-04-19T22:30:00.000Z",
+      start: "Matara",
+      end: "Colombo",
+      noOfPassengers: 24,
     },
   ];
 
+  const [selectedBookings, setSelectedBookings] = useState(bookings);
+
   const [date, setDate] = useState(new Date());
-  const [arrival, setArrival] = useState("");
-  const [departure, setDeparture] = useState("");
+
+  // date queries
+  const queryByDate = (date) => {
+    newBookings = bookings.filter(
+      (booking) => booking.dateTime.slice(0, 10) === date
+    );
+    setSelectedBookings(newBookings);
+  };
 
   const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -66,7 +76,7 @@ const TimeTable = ({ navigation }) => {
         >
           <Icon name="menu" size={30} color="#ffffff" />
         </TouchableOpacity>
-        <Text style={styles.headerText}> Time Table </Text>
+        <Text style={styles.headerText}> Booking Details </Text>
       </View>
 
       <View style={{ flex: 2 }}>
@@ -79,48 +89,14 @@ const TimeTable = ({ navigation }) => {
             alignItems: "center",
             left: 0,
             right: 0,
-            marginTop: 25,
+            marginTop: 30,
           }}
         >
-          <View style={styles.pickerView}>
-            <Picker
-              selectedValue={arrival}
-              style={{
-                height: 40,
-                minWidth: SCREEN_WIDTH - 90,
-              }}
-              onValueChange={(itemValue, i) => setArrival(itemValue)}
-            >
-              <Picker.Item value="" label="Select Arrival..." />
-              {scheduleData?.arrivals.map((item, i) => {
-                return <Picker.Item key={i} label={item} value={item} />;
-              })}
-            </Picker>
-          </View>
-
-          <View style={styles.pickerView}>
-            <Picker
-              selectedValue={departure}
-              placeholder="Select Departure"
-              style={{
-                height: 40,
-                minWidth: SCREEN_WIDTH - 90,
-              }}
-              onValueChange={(itemValue, i) => setDeparture(itemValue)}
-            >
-              <Picker.Item value="" label="Select Departure..." />
-              {scheduleData?.departures.map((item, i) => {
-                return <Picker.Item key={i} label={item} value={item} />;
-              })}
-            </Picker>
-          </View>
-
-          <Text> Select Date </Text>
+          <Text style={styles.selectDate}> Select a Date </Text>
 
           <View>
             <DatePickerModel
               date={date}
-              onDateChange={setDate}
               placeholder="select date"
               format="YYYY-MM-DD"
               minDate={new Date()}
@@ -145,49 +121,71 @@ const TimeTable = ({ navigation }) => {
                   color: "#007acc",
                 },
               }}
+              onDateChange={(date) => {
+                queryByDate(date);
+                setDate(date);
+              }}
             />
           </View>
         </View>
       </View>
 
-      <View style={{ flex: 3 }}>
-        <ScrollView>
-          {busRoutes?.map((route, i) => {
+      <View style={{ flex: 8 }}>
+        <ScrollView style={{ paddingBottom: 5 }}>
+          {selectedBookings?.map((booking, i) => {
             return (
               <Card>
-                <Card.Title>
-                  {route.arrival + " to " + route.departure}
-                </Card.Title>
+                <Card.Title>Booking ID: {booking.bookingId}</Card.Title>
 
                 <Card.Divider />
 
                 <View>
                   <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View>
+                      <View
+                        style={{
+                          textAlign: "left",
+                          flex: 1,
+                          flexDirection: "row",
+                          marginBottom: 4,
+                        }}
+                      >
+                        <Icon name="next-week" size={20} color="#007acc" />
+                        <Text style={styles.dateInfoText}>
+                          {booking.dateTime.slice(0, 10)}
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          textAlign: "right",
+                          flex: 1,
+                          flexDirection: "row",
+                        }}
+                      >
+                        <Icon name="schedule" size={20} color="gray" />
+                        <Text style={styles.timeInfoText}>
+                          {booking.dateTime.slice(11, 16)}
+                        </Text>
+                      </View>
+                    </View>
+
                     <View
                       style={{
                         textAlign: "left",
                         flex: 1,
                         flexDirection: "row",
+                        marginLeft: 35,
+                        marginRight: 20,
                       }}
                     >
-                      <Icon name="pages" size={20} color="#007acc" />
+                      <Icon name="train" size={20} color="#007acc" />
                       <Text style={styles.dateInfoText}>
-                        {route.dateTime.slice(0, 10)}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        textAlign: "right",
-                        flex: 1,
-                        flexDirection: "row",
-                      }}
-                    >
-                      <Icon name="history" size={20} color="gray" />
-                      <Text style={styles.timeInfoText}>
-                        {route.dateTime.slice(11, 16)}
+                        {booking.start + " to " + booking.end}
                       </Text>
                     </View>
                   </View>
+
+                  <View style={{ flex: 1, marginTop: 5 }}></View>
                 </View>
               </Card>
             );
@@ -222,6 +220,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     top: -15,
     color: "#ffffff",
+  },
+  selectDate: {
+    fontSize: 20,
+    color: "gray",
   },
   profileIcon: {
     resizeMode: "center",
@@ -275,4 +277,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TimeTable;
+export default BookingDetails;

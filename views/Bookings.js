@@ -13,52 +13,35 @@ import { Button, Icon, Card } from "react-native-elements";
 
 import FocusAwareStatusBar from "../Navigation/FocusAwareStatusBar";
 
-const Bookings = ({ navigation }) => {
+const Bookings = ({ route, navigation }) => {
   // fetched
-  const busRoutes = [
+  const busses = [
     {
       routeNo: "R1",
-      start: "Matara",
-      end: "Colombo",
+      busNo: "NB 6780",
     },
     {
       routeNo: "R2",
-      start: "Matara",
-      end: "Galle",
+      busNo: "57 6780",
     },
     {
       routeNo: "R3",
-      start: "Colombo",
-      end: "Galle",
+      busNo: "63 1281",
     },
     {
       routeNo: "R4",
-      start: "Kataragama",
-      end: "Colombo",
+      busNo: "NC 6780",
     },
     {
-      routeNo: "R5",
-      start: "Kany",
-      end: "Colombo",
-    },
-    {
-      routeNo: "R6",
-      start: "Mannarama",
-      end: "Colombo",
-    },
-    {
-      routeNo: "R7",
-      start: "Badulla",
-      end: "Colombo",
+      routeNo: "R2",
+      busNo: "19 6780",
     },
   ];
 
   const SCREEN_WIDTH = Dimensions.get("window").width;
 
-  const createBooking = () => {
-    // booking creation logic here
-    // local storage logic here
-    console.log("Booking Created Step 01");
+  const handleNavigation = () => {
+    navigation.navigate("BookingDetails");
   };
 
   return (
@@ -71,27 +54,27 @@ const Bookings = ({ navigation }) => {
         >
           <Icon name="menu" size={30} color="#ffffff" />
         </TouchableOpacity>
-        <Text style={styles.headerText}> Select Your Route </Text>
+        <Text style={styles.headerText}> Bookings </Text>
       </View>
 
       <View style={{ flex: 3 }}>
         <FocusAwareStatusBar barStyle="light-content" hidden={false} />
         <ScrollView>
-          {busRoutes?.map((route, i) => {
+          {busses?.map((bus, i) => {
             return (
               <Card key={i}>
                 <Card.Title>
                   <View
                     style={{
-                      textAlign: "left",
+                      alignContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
                       flex: 1,
                       flexDirection: "row",
                     }}
                   >
                     <Icon name="train" color="gray" />
-                    <Text style={{ marginLeft: 5 }}>
-                      {route.start + " to " + route.end}
-                    </Text>
+                    <Text>{bus.busNo}</Text>
                   </View>
                 </Card.Title>
 
@@ -108,7 +91,7 @@ const Bookings = ({ navigation }) => {
                     >
                       <Icon name="info" size={20} color="#007acc" />
                       <Text style={styles.dateInfoText}>
-                        Route No: {route.routeNo}
+                        Route No: {bus.routeNo}
                       </Text>
                     </View>
                     <View
@@ -125,9 +108,9 @@ const Bookings = ({ navigation }) => {
                           alignItems: "center",
                         }}
                         buttonStyle={styles.button}
-                        title="Book Now"
+                        title="View Bookings"
                         titleStyle={styles.buttonTitle}
-                        onPress={() => navigation.navigate("BookingInfo")}
+                        onPress={() => handleNavigation()}
                         activeOpacity={0.5}
                       />
                     </View>
