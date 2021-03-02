@@ -1,80 +1,98 @@
-import React, { useState, useCallback, useEffect } from "react";
-
+import React from "react";
+import { GiftedChat } from "react-native-gifted-chat";
 import {
   StyleSheet,
-  SafeAreaView,
-  Dimensions,
-  ScrollView,
-  TouchableOpacity,
   Text,
+  TextInput,
   View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  Dimensions,
+  TouchableOpacity,
 } from "react-native";
-import SimpleChat from "react-native-simple-chat";
 import { Button, Icon } from "react-native-elements";
-import { GiftedChat } from "react-native-gifted-chat";
 
-const ChatView = () => {
-  const [messages, setMessages] = useState([]);
+import FocusAwareStatusBar from "../Navigation/FocusAwareStatusBar";
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: "Hello, Can I book a Bus?",
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: "Chiran",
-          avatar:
-            "https://avatars.githubusercontent.com/u/44913467?s=460&u=2c1f1087edeaddc815c86576213e04e793aaf2a2&v=4",
-        },
-      },
-    ]);
-  }, []);
+import firebaseSvc from "../FirebaseSvc";
 
-  const onSend = useCallback((messages = []) => {
-    setMessages((previousMessages) =>
-      GiftedChat.append(previousMessages, messages)
-    );
-  }, []);
-
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      {/* header */}
-      <View style={styles.floatingView}>
-        <TouchableOpacity
-          style={styles.icon}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Icon name="menu" size={30} color="#ffffff" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}> Chat with Passenger </Text>
-      </View>
-
-      <View style={{ flex: 1 }}>
-        <GiftedChat
-          messages={messages}
-          onSend={(messages) => onSend(messages)}
-          user={{
-            _id: 1,
-          }}
-        />
-      </View>
-    </SafeAreaView>
-  );
+type Props = {
+  name?: string,
+  email?: string,
+  avatar?: string,
 };
 
+class ChatView extends React.Component<Props> {
+  constructor(props) {
+    super(props);
+  }
+  static navigationOptions = ({ navigation }) => ({
+    title: "ChatView",
+  });
+
+  state = {
+    messages: [],
+  };
+
+  get user() {
+    return {
+      name: this.props.route.params.name,
+      email: this.props.route.params.email,
+      avatar: this.props.route.params.avatar,
+      id: firebaseSvc.uid,
+      _id: firebaseSvc.uid, // need for gifted-chat
+    };
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={{ flex: 1 }}>
+        {/* header */}
+        <View style={styles.floatingView}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => this.props.navigation.openDrawer()}
+          >
+            <Icon name="menu" size={30} color="#ffffff" />
+          </TouchableOpacity>
+          <Text style={styles.headerText}> BuzzBus Chat </Text>
+        </View>
+
+        <View style={{ flex: 3 }}>
+          <FocusAwareStatusBar barStyle="light-content" hidden={false} />
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={firebaseSvc.send}
+            user={this.user}
+            renderUsernameOnMessage={true}
+          />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  componentDidMount() {
+    firebaseSvc.refOn((message) =>
+      this.setState((previousState) => ({
+        messages: GiftedChat.append(previousState.messages, message),
+      }))
+    );
+  }
+  componentWillUnmount() {
+    firebaseSvc.refOff();
+  }
+}
+
+const offset = 16;
 const styles = StyleSheet.create({
-  container: {
-    flex: 8,
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
   statusBar: {
     height: 10,
+  },
+  logoImage: {
+    marginTop: 30,
+    width: 210,
+    height: 160,
   },
   floatingView: {
     width: Dimensions.get("window").width,
@@ -97,25 +115,18 @@ const styles = StyleSheet.create({
     top: -15,
     color: "#ffffff",
   },
-  button: {
-    height: 40,
-    width: 180,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#71C3E7",
-  },
-  buttonTitle: {
-    fontSize: 14,
-    color: "white",
-    textAlign: "center",
-  },
   titleText: {
     textAlign: "center",
     justifyContent: "center",
     fontSize: 22,
     fontWeight: "bold",
-    marginTop: 35,
+    marginBottom: 15,
+    marginTop: 15,
+  },
+  title: {
+    marginTop: offset,
+    marginLeft: offset,
+    fontSize: offset,
   },
 });
 

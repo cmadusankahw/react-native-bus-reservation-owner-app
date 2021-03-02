@@ -71,7 +71,7 @@ const Home = ({ navigation }) => {
       <View style={styles.container}>
         <FloatingButton
           style={styles.floatinBtn}
-          onPress={() => navigation.navigate("Chat")}
+          onPress={() => navigation.navigate("ChatLogin")}
         />
       </View>
     </>
