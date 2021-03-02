@@ -121,7 +121,7 @@ const EditProfile = ({ navigation }) => {
                   style={styles.infoAnswerLabel}
                   defaultValue={user.lastName}
                 />
-                <TextInput style={styles.infoAnswerLabel} value={user.NIC} />
+                <TextInput style={styles.infoAnswerLabel} defaultValue={user.NIC} />
                 <TextInput
                   style={styles.infoAnswerLabel}
                   autoCompleteType="tel"
